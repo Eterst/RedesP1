@@ -1,0 +1,71 @@
+version: "3.8"
+
+
+services:
+  cliente_01:
+    build: 
+      context: ./ubuntu
+      dockerfile: dockerFile
+    container_name: ubuntu
+    restart: on-failure
+    command: ["sleep","infinity"]
+    networks:
+      - vlan-1
+
+  dhcp1:
+    build: 
+      context: ./dhcp_server
+      dockerfile: dockerFile
+    container_name: dhcp1
+    
+    networks:
+      vlan-1:
+        ipv4_address: 10.0.0.4
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always
+    privileged: true
+    networks:
+      vlan-1:
+        ipv4_address: 10.0.0.20
+
+  web_server_1:
+    build: 
+      context: ./web_server
+      dockerfile: dockerFile
+    container_name: web_server_1
+    expose:
+      - "80"
+    volumes:
+      - ./html/:/usr/share/nginx/html
+    environment:
+      -VIRTUAL_HOST: http://www.google.com/web1
+    restart: always
+    
+    networks:
+      vlan-1:
+        ipv4_address: 10.0.0.21
+
+
+
+networks:
+  vlan-1:
+    name: LAN Virtual 1
+    driver: bridge
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: "10.0.0.0/24"
+          ip_range: "10.0.0.0/24"
+          gateway: "10.0.0.1"
+
+
+
+

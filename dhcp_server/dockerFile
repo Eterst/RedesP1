@@ -1,0 +1,5 @@
+FROM networkboot/dhcpd
+
+
+RUN mkdir data
+RUN touch /data/dhcpd.conf
