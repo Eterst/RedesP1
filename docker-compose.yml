@@ -17,13 +17,17 @@ services:
       context: ./dhcp_server
       dockerfile: dockerFile
     container_name: dhcp1
-    
+    volumes:
+      - ./dhcp_server/config/:/data/
     networks:
       vlan-1:
         ipv4_address: 10.0.0.4
 
   nginx-proxy:
-    image: jwilder/nginx-proxy
+    build: 
+      context: ./reverse_proxy
+      dockerfile: dockerFile
+    container_name: reverse_proxy
     ports:
       - "80:80"
       - "443:443"
@@ -45,7 +49,7 @@ services:
     volumes:
       - ./html/:/usr/share/nginx/html
     environment:
-      -VIRTUAL_HOST: http://www.google.com/web1
+      VIRTUAL_HOST: http://www.google.com/web1
     restart: always
     
     networks:

@@ -1,0 +1,7 @@
+FROM jwilder/nginx-proxy
+
+CMD chmod -R 777 etc \
+    echo "127.0.0.1 http://www.google.com/web1" >> /etc/hosts \
+    echo "127.0.0.1 http://www.google.com/web2" >> /etc/hosts 
+
+
