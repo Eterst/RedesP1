@@ -1,0 +1,16 @@
+
+
+zone "lan01.io" {   
+    type master;
+    //file "/etc/bind/db.lan01";   
+};
+
+zone "lan02.io" {   
+    type master;
+    //file "/etc/bind/db.lan02";   
+};
+
+zone "google.com" {   
+    type master;
+    //file "/etc/bind/db.google";
+};
