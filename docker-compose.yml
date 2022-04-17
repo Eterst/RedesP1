@@ -91,9 +91,6 @@ services:
     build:
       context: ./router1
       dockerfile: dockerFile
-    networks:
-      vlan-1:
-        ipv4_address: 10.0.0.1
 
 networks:
   vlan-1:
