@@ -1,0 +1,14 @@
+FROM ubuntu
+
+#instalar el servidor bind
+RUN apt-get update \
+    apt-get install -y bind9 bind9utils bind9-doc
+
+
+RUN apt-get install -y dnsutils
+# Creacion de archivo de configuracion principal
+#RUN touch /etc/bind/named.conf.options
+
+
+# Copiar la configuracion del archivo hacia el contenedor
+#RUN cp -v /dns/named.conf.options /etc/bind/named.conf.options

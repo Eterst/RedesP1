@@ -2,6 +2,7 @@ version: "3.8"
 
 
 services:
+
   cliente_01:
     build: 
       context: ./ubuntu
@@ -22,6 +23,19 @@ services:
     networks:
       vlan-1:
         ipv4_address: 10.0.0.4
+  
+  dns:
+    build: 
+      context: ./dns
+      dockerfile: dockerFile
+    container_name: dns
+    volumes:
+      - ./dns/conf/:/etc/bind
+    restart: on-failure
+    command: ["sleep","infinity"]
+    networks:
+      vlan-1:
+        ipv4_address: 10.0.0.3
 
   nginx-proxy:
     build: 
