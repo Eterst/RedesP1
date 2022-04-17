@@ -75,7 +75,9 @@ services:
     restart: always
     cap_add:
       - NET_ADMIN
-    image: kylemanna/openvpn
+    build: 
+      context: ./openvpn
+      dockerfile: dockerfile
     ports:
       - "8443:8443/tcp" #router 1 debe enrutar a este puerto
     networks:
