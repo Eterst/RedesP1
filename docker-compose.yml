@@ -83,6 +83,17 @@ networks:
         - subnet: "10.0.0.0/24"
           ip_range: "10.0.0.0/24"
           gateway: "10.0.0.1"
+  
+  vlan-2:
+    name: LAN Virtual 2
+    driver: bridge
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: "10.0.1.0/24"
+          ip_range: "10.0.1.0/24"
+          gateway: "10.0.1.0"
 
 
 
