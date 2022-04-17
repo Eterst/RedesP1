@@ -77,7 +77,7 @@ services:
       - NET_ADMIN
     build: 
       context: ./openvpn
-      dockerfile: dockerfile
+      dockerfile: dockerFile
     ports:
       - "8443:8443/tcp" #router 1 debe enrutar a este puerto
     networks:
