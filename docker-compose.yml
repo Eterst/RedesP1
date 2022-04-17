@@ -85,6 +85,15 @@ services:
         ipv4_address: 10.0.1.10
     volumes:
      - ./openvpn/conf:/etc/openvpn
+  ubuntu_server:
+    container_name: Router1
+    restart: always
+    build:
+      context: ./router1
+      dockerfile: dockerFile
+    networks:
+      vlan-1:
+        ipv4_address: 10.0.0.1
 
 networks:
   vlan-1:
