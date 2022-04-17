@@ -70,7 +70,19 @@ services:
       vlan-1:
         ipv4_address: 10.0.0.21
 
-
+  openvpn:
+    container_name: VPN
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    image: kylemanna/openvpn
+    ports:
+      - "8443:8443/tcp" #router 1 debe enrutar a este puerto
+    networks:
+      vlan-2: 
+        ipv4_address: 10.0.1.10
+    volumes:
+     - ./openvpn/conf:/etc/openvpn
 
 networks:
   vlan-1:
