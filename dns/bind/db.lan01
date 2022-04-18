@@ -1,0 +1,21 @@
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@   IN  SOA lan01.io. root.lan01.io. (
+                  1     ; Serial
+             604800     ; Refresh
+              86400     ; Retry
+            2419200     ; Expire
+             604800 )   ; Negative Cache TTL
+
+
+$ORIGIN lan01.io.
+@       IN      NS      ns1
+
+dhcp1     IN      A       10.0.0.4
+proxyReverso     IN      A       10.0.0.20
+dns     IN      A       10.0.0.3
+webCache     IN      A       10.0.0.7
+webServer1     IN      A       10.0.0.21
+Router1     IN      A       10.0.0.1

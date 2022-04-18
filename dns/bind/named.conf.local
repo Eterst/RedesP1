@@ -2,7 +2,7 @@
 
 zone "lan01.io" {   
     type master;
-    //file "/etc/bind/db.lan01";   
+    file "/etc/bind/db.lan01";   
 };
 
 zone "lan02.io" {   

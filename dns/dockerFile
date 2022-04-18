@@ -6,8 +6,12 @@ RUN apt-get update && \
 
 
 RUN apt-get install -y dnsutils
-# Creacion de archivo de configuracion principal
-#RUN touch /etc/bind/named.conf.options
+
+#RUN /etc/init.d/bind9 restart
+
+RUN chmod +rwx /etc/resolv.conf
+#RUN echo "nameserver 10.0.0.3" > /etc/resolv.conf
+
 
 
 # Copiar la configuracion del archivo hacia el contenedor

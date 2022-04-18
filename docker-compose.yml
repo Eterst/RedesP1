@@ -29,8 +29,11 @@ services:
       context: ./dns
       dockerfile: dockerFile
     container_name: dns
+    user: root
     volumes:
-      - ./dns/conf/:/etc/bind
+      - ./dns/:/etc
+      #- ./dns/conf/:/etc/bind
+      #- ./dns/conf/etc/:/etc
     restart: on-failure
     command: ["sleep","infinity"]
     networks:
@@ -113,8 +116,9 @@ networks:
       config:
         - subnet: "10.0.1.0/24"
           ip_range: "10.0.1.0/24"
-          gateway: "10.0.1.0"
+          gateway: "10.0.1.1"
 
 
-
+volumes:
+  dns: {}
 
