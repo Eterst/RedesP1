@@ -5,11 +5,11 @@ RUN apt-get update && \
      apt-get install -y bind9 bind9utils bind9-doc
 
 
-RUN apt-get install -y dnsutils
+#RUN apt-get install -y dnsutils
 
 #RUN /etc/init.d/bind9 restart
 
-RUN chmod +rwx /etc/resolv.conf
+#RUN chmod +rwx /etc/resolv.conf
 #RUN echo "nameserver 10.0.0.3" > /etc/resolv.conf
 
 
