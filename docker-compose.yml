@@ -41,8 +41,16 @@ services:
       dockerfile: dockerFile
     container_name: dns
     volumes:
-      - ./dns/:/etc/
+      #- ./dns/:/etc/
       - ./dns/resolv.conf:/etc/resolv.conf
+      - ./dns/bind/named.conf.local:/etc/bind/named.conf.local
+      - ./dns/bind/named.conf.options:/etc/bind/named.conf.options
+      
+      #
+      - ./dns/bind/db.google:/etc/bind/db.google
+      - ./dns/bind/db.lan01:/etc/bind/db.lan01
+      - ./dns/bind/db.lan02:/etc/bind/db.lan02
+
     restart: on-failure
     command: ["sleep","infinity"]
     networks:
