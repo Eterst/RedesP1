@@ -13,6 +13,16 @@ services:
     networks:
       - vlan-1
 
+  router1:
+    build: 
+      context: ./router1
+      dockerfile: dockerFile
+    container_name: router1
+    restart: on-failure
+    command: ["sleep","infinity"]
+    networks:
+      - vlan-1
+
   dhcp1:
     build: 
       context: ./dhcp_server
@@ -85,12 +95,6 @@ services:
         ipv4_address: 10.0.1.10
     volumes:
      - ./openvpn/conf:/etc/openvpn
-  router1:
-    build: 
-      context: ./router1
-      dockerfile: dockerFile
-    container_name: router1
-    restart: on-failure
 
 networks:
   vlan-1:
