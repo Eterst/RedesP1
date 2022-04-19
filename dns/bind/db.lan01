@@ -11,7 +11,7 @@ $TTL    604800
 
 
 ;$ORIGIN lan01.io.
-@                 IN      NS      lan01.io.
+                  IN      NS      lan01.io.
 lan01.io.         IN      A       10.0.0.3
 
 dhcp1             IN      A       10.0.0.4
