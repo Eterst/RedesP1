@@ -3,18 +3,6 @@ version: "3.8"
 
 services:
 
-  cliente_01:
-    build: 
-      context: ./ubuntu
-      dockerfile: dockerFile
-    container_name: ubuntu
-    volumes:
-      - ./ubuntu/resolv.conf:/etc/resolv.conf
-    restart: on-failure
-    command: ["sleep","infinity"]
-    networks:
-      - vlan-1
-
   router1:
     build: 
       context: ./router1
@@ -107,6 +95,19 @@ services:
         ipv4_address: 10.0.1.10
     volumes:
      - ./openvpn/conf:/etc/openvpn
+  
+  
+  cliente_01:
+    build: 
+      context: ./ubuntu
+      dockerfile: dockerFile
+    container_name: ubuntu
+    volumes:
+      - ./ubuntu/resolv.conf:/etc/resolv.conf
+    restart: on-failure
+    command: ["sleep","infinity"]
+    networks:
+      - vlan-1
 
 networks:
   vlan-1:
