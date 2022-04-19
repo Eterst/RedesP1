@@ -19,8 +19,8 @@ services:
       context: ./dhcp_server
       dockerfile: dockerFile
     container_name: dhcp1
-    volumes:
-      - ./dhcp_server/config/:/data/
+    #volumes:
+    #  - ./dhcp_server/config/:/data/
     networks:
       vlan-1:
         ipv4_address: 10.0.0.4
