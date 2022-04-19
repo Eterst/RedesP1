@@ -2,6 +2,7 @@ FROM ubuntu
 
 #instalar el servidor bind
 RUN apt-get update && \
+     apt-get install -y dnsutils &&\
      apt-get install -y iputils-ping && \
      apt-get install -y bind9 bind9utils bind9-doc
 

@@ -10,12 +10,13 @@ $TTL    604800
              604800 )   ; Negative Cache TTL
 
 
-$ORIGIN lan01.io.
-@       IN      NS      ns1
+;$ORIGIN lan01.io.
+@                 IN      NS      lan01.io.
+lan01.io.         IN      A       10.0.0.3
 
-dhcp1     IN      A       10.0.0.4
-proxyReverso     IN      A       10.0.0.20
-dns     IN      A       10.0.0.3
-webCache     IN      A       10.0.0.7
-webServer1     IN      A       10.0.0.21
-Router1     IN      A       10.0.0.1
+dhcp1             IN      A       10.0.0.4
+;proxyReverso     IN      A       10.0.0.20
+;webCache         IN      A       10.0.0.7
+webServer1        IN      A       10.0.0.21
+;Router1          IN      A       10.0.0.1
+;www              IN      A       10.0.0.21

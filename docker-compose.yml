@@ -8,6 +8,8 @@ services:
       context: ./ubuntu
       dockerfile: dockerFile
     container_name: ubuntu
+    volumes:
+      - ./ubuntu/resolv.conf:/etc/resolv.conf
     restart: on-failure
     command: ["sleep","infinity"]
     networks:

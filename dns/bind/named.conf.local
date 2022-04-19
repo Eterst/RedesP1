@@ -3,14 +3,17 @@
 zone "lan01.io" {   
     type master;
     file "/etc/bind/db.lan01";   
+    notify yes;
 };
 
 zone "lan02.io" {   
     type master;
-    //file "/etc/bind/db.lan02";   
+    file "/etc/bind/db.lan02";   
+    notify yes;
 };
 
 zone "google.com" {   
     type master;
-    //file "/etc/bind/db.google";
+    file "/etc/bind/db.google";
+    notify yes;
 };
