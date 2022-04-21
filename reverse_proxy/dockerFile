@@ -1,4 +1,8 @@
 FROM nginx
 
 
- RUN apt-get install openssl
+RUN apt-get update -y && \
+    apt-get install -y ufw &&\
+    apt-get install openssl && \
+    ufw allow 80 && \
+    apt-get install -y httpie
