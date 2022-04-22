@@ -18,9 +18,14 @@ services:
     build: 
       context: ./dhcp_server
       dockerfile: dockerFile
-    container_name: dhcp1
-    #volumes:
-    #  - ./dhcp_server/config/:/data/
+    container_name: dhcpd1
+    restart: on-failure
+    command: ["sleep","infinity"]
+    ports:
+      - "67/udp"
+    volumes:
+      - ./dhcp_server/dhcpd.conf:/etc/dhcp/dhcpd.conf
+    restart: always
     networks:
       vlan-1:
         ipv4_address: 10.0.0.4

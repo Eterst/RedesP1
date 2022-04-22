@@ -1,8 +1,5 @@
 FROM ubuntu
 
-RUN  apt-get update && \
-     apt-get install -y isc-dhcp-server &&\
-     apt-get install -y network-manager &&\
-     apt-get install -y net-tools && \
-     apt-get install -y iputils-ping && \
-     apt install -y iproute2
+# Install the dhcpd server.
+RUN apt update &&\
+    apt install -y isc-dhcp-server
