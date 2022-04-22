@@ -25,7 +25,6 @@ services:
       - "67/udp"
     volumes:
       - ./dhcp_server/dhcpd.conf:/etc/dhcp/dhcpd.conf
-    restart: always
     networks:
       vlan-1:
         ipv4_address: 10.0.0.4
