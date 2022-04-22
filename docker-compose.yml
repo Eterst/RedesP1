@@ -25,7 +25,7 @@ services:
       - "67/udp"
     volumes:
       - ./dhcp_server/dhcpd.conf:/etc/dhcp/dhcpd.conf
-    restart: always
+      - ./dhcp_server/isc-dhcp-server:/etc/default/isc-dhcp-server
     networks:
       vlan-1:
         ipv4_address: 10.0.0.4
@@ -135,8 +135,11 @@ services:
     container_name: ubuntu
     volumes:
       - ./ubuntu/resolv.conf:/etc/resolv.conf
+      - ./ubuntu/interfaces:/etc/network/interfaces
     restart: on-failure
     command: ["sleep","infinity"]
+    depends_on:
+      - dhcp1
     networks:
       - vlan-1
 
