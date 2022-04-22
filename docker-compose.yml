@@ -25,7 +25,10 @@ services:
       - "67/udp"
     volumes:
       - ./dhcp_server/dhcpd.conf:/etc/dhcp/dhcpd.conf
+<<<<<<< HEAD
       - ./dhcp_server/isc-dhcp-server:/etc/default/isc-dhcp-server
+=======
+>>>>>>> 2e9a976771f73446b73d1650b1accf7858e1c6ac
     networks:
       vlan-1:
         ipv4_address: 10.0.0.4
