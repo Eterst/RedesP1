@@ -10,9 +10,10 @@ services:
     container_name: router1
     restart: on-failure
     command: ["sleep","infinity"]
-    networks:
-      vlan-1:
-        ipv4_address: 10.0.0.30
+    volumes:
+      - ./router1/netplan/01-network-manager-all.yaml:/etc/netplan/01-network-manager-all.yaml
+    cap_add:
+      - NET_ADMIN
 
   dhcp1:
     build: 

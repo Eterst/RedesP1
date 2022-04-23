@@ -1,6 +1,11 @@
-FROM ubuntu
+FROM ubuntu:18.04
 
 RUN apt-get update && \
      apt-get install -y net-tools && \
-     apt-get install -y iputils-ping
+     apt-get install -y iputils-ping && \
+     apt-get install -y nano && \
+     apt-get install -y netplan.io
+
 #RUN echo "78 1 27 1" | DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y ubuntu-server
+
+# apt-get install -y netplan.iols
