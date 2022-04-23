@@ -18,14 +18,26 @@ services:
     build: 
       context: ./dhcp_server
       dockerfile: dockerFile
+    user: root
     container_name: dhcpd1
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
     restart: on-failure
-    command: ["sleep","infinity"]
+    command: ["sleep","infinity"] 
+
     ports:
       - "67/udp"
     volumes:
       - ./dhcp_server/dhcpd.conf:/etc/dhcp/dhcpd.conf
       - ./dhcp_server/isc-dhcp-server:/etc/default/isc-dhcp-server
+      - ./dhcp_server/interfaces:/etc/network/interfaces
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - HTTP_USER=foo
+      - HTTP_PASS=bar
     networks:
       vlan-1:
         ipv4_address: 10.0.0.4

@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # A sample Bash script, by Roy
-echo Hello World!
+docker run -it --rm networkboot/dhcpd man dhcpd.conf
