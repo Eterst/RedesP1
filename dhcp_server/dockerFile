@@ -9,6 +9,15 @@ RUN apt update &&\
      apt-get install -y net-tools && \
      apt-get install -y iputils-ping && \
      apt-get install -yqq daemonize dbus-user-session fontconfig &&\
+     apt-get install network-manager &&\
+     apt-get install procps &&\
      apt install -y isc-dhcp-server
 
-#CMD systemctl start isc-dhcp-server
+#RUN su  
+#ENTRYPOINT ["service","isc-dhcp-server", "start"]
+
+#RUN cp -fr /dhcp_server/isc-dhcp-server /etc/default/isc-dhcp-server
+#RUN cp -fr /dhcp_server/interfaces /etc/network/interfaces
+
+
+#RUN service isc-dhcp-server start

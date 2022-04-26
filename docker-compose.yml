@@ -27,7 +27,7 @@ services:
         constraints: [node.role == manager]
     restart: on-failure
     command: ["sleep","infinity"] 
-
+    privileged: true
     ports:
       - "67/udp"
     volumes:
