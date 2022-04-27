@@ -6,4 +6,5 @@ RUN apt-get update && \
      apt-get install -y network-manager &&\
      apt-get install -y net-tools && \
      apt-get install -y iputils-ping && \
-     apt install -y iproute2
+     apt install -y iproute2 &&\
+     apt install -y dnsutils
