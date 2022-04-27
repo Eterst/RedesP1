@@ -1,7 +1,12 @@
 FROM ubuntu
 
+#RUN apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
+#	&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+
+
 # Install the dhcpd server.
-RUN apt update &&\
+RUN  apt-get update -y &&\
+     apt-get upgrade -y &&\
      apt-get install -y init &&\
      apt-get install -y network-manager &&\
      apt-get install systemd &&\
@@ -9,10 +14,14 @@ RUN apt update &&\
      apt-get install -y net-tools && \
      apt-get install -y iputils-ping && \
      apt-get install -yqq daemonize dbus-user-session fontconfig &&\
-     apt-get install network-manager &&\
      apt-get install procps &&\
-     apt install -y isc-dhcp-server
+     apt-get install -y isc-dhcp-server
 
+ENV LANG en_US.utf8
+
+#ENTRYPOINT ["/bash.sh"]
+CMD ["/etc/init.d/isc-dhcp-server", "start"]
+#CMD ["mkdir", "Holaperro"]
 #RUN su  
 #ENTRYPOINT ["service","isc-dhcp-server", "start"]
 

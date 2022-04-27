@@ -1,3 +1,3 @@
-#apt update
-sleep infinity 
-apt-get purge whoopsie libwhoopsie0
+#!/bin/bash
+
+/etc/init.d/isc-dhcp-server start

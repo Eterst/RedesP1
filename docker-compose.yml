@@ -34,6 +34,7 @@ services:
     ports:
       - "67/udp"
     volumes:
+      - ./dhcp_server/bash.sh:/bash.sh
       - ./dhcp_server/dhcpd.conf:/etc/dhcp/dhcpd.conf
       - ./dhcp_server/isc-dhcp-server:/etc/default/isc-dhcp-server
       - ./dhcp_server/interfaces:/etc/network/interfaces
