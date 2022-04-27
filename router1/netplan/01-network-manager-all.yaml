@@ -2,5 +2,8 @@ network:
   version: 2
   renderer: networkd
   ethernets:
-    enp0s3:
+    eth0:
       dhcp4: true
+    eth1:
+      addresses:
+        - 10.0.0.1/24

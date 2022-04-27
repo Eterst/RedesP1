@@ -9,11 +9,14 @@ services:
       dockerfile: dockerFile
     container_name: router1
     restart: on-failure
-    command: ["sleep","infinity"]
     volumes:
-      - ./router1/netplan/01-network-manager-all.yaml:/etc/netplan/01-network-manager-all.yaml
+        - './router1/sys/fs/cgroup:/sys/fs/cgroup:ro'
+    #volumes:
+    #  - ./router1/netplan/01-network-manager-all.yaml:/etc/netplan/01-network-manager-all.yaml
     cap_add:
       - NET_ADMIN
+    networks:
+      - vlan-1
 
   dhcp1:
     build: 
