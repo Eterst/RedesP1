@@ -20,7 +20,7 @@ RUN  apt-get update -y &&\
 ENV LANG en_US.utf8
 
 #ENTRYPOINT ["/bash.sh"]
-CMD ["/etc/init.d/isc-dhcp-server", "start"]
+#CMD ["/etc/init.d/isc-dhcp-server", "start"]
 #CMD ["mkdir", "Holaperro"]
 #RUN su  
 #ENTRYPOINT ["service","isc-dhcp-server", "start"]
