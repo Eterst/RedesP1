@@ -8,15 +8,20 @@ services:
       context: ./router1
       dockerfile: dockerFile
     container_name: router1
-    restart: on-failure
-    volumes:
-        - './router1/sys/fs/cgroup:/sys/fs/cgroup:ro'
-    #volumes:
-    #  - ./router1/netplan/01-network-manager-all.yaml:/etc/netplan/01-network-manager-all.yaml
+    privileged: true
     cap_add:
       - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+    # - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.ip_forward=1
+      - net.ipv4.tcp_timestamps=0
+    volumes:
+      - "./router1/sysctl.conf:/etc/sysctl.conf"
     networks:
-      - vlan-1
+      host-bridge:
+      vlan-1:
+        ipv4_address: 10.0.0.10
 
   dhcp1:
     build: 
@@ -144,45 +149,45 @@ services:
     volumes:
      - ./openvpn/conf:/etc/openvpn
   
-  
+
   cliente_01:
     build: 
       context: ./ubuntu
       dockerfile: dockerFile
     container_name: ubuntu
-    volumes:
-      - ./ubuntu/resolv.conf:/etc/resolv.conf
-      - ./ubuntu/interfaces:/etc/network/interfaces
+    privileged: true
+    #volumes:
+    #  - ./ubuntu/resolv.conf:/etc/resolv.conf
+    #  - ./ubuntu/interfaces:/etc/network/interfaces
     restart: on-failure
     command: ["sleep","infinity"]
-    depends_on:
-      - dhcp1
+    #depends_on:
+    #  - dhcp1
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
     networks:
-      - vlan-1
+      vlan-1:
 
 networks:
+  host-bridge:
+    name: Host bridge
+    driver: bridge
+    driver_opts:
+      parent: eth0
+    ipam:
+      driver: default
   vlan-1:
     name: LAN Virtual 1
-    driver: bridge
-    driver_opts:
-      parent: eth0
+    driver: ipvlan
     ipam:
+      driver: default
       config:
-        - subnet: "10.0.0.0/24"
-          ip_range: "10.0.0.0/24"
-          gateway: "10.0.0.1"
-  
+        - subnet: 10.0.0.0/24
   vlan-2:
     name: LAN Virtual 2
-    driver: bridge
-    driver_opts:
-      parent: eth0
+    driver: ipvlan
     ipam:
+      driver: default
       config:
-        - subnet: "10.0.1.0/24"
-          ip_range: "10.0.1.0/24"
-          gateway: "10.0.1.1"
-
-
-
-
+        - subnet: 10.0.1.0/24
