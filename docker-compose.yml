@@ -63,15 +63,16 @@ services:
     volumes:
       #- ./dns/:/etc/
       - ./dns/bash.sh:/bash.sh
-      - ./dns/resolv.conf:/etc/resolv.conf
+      #- ./dns/resolv.conf:/etc/systemd/resolv.conf
+      - ./dns/resolved.conf:/etc/systemd/resolved.conf
       - ./dns/bind/named.conf.local:/etc/bind/named.conf.local
       - ./dns/bind/named.conf.options:/etc/bind/named.conf.options
-      - ./dns/rndc.conf:/etc/bind/rndc.conf
+      #- ./dns/rndc.conf:/etc/bind/rndc.conf
       
       #
-      - ./dns/bind/db.google:/etc/bind/db.google
-      - ./dns/bind/db.lan01:/etc/bind/db.lan01
-      - ./dns/bind/db.lan02:/etc/bind/db.lan02
+      - ./dns/bind/db.google:/etc/bind/zones/db.google
+      - ./dns/bind/db.lan01:/etc/bind/zones/db.lan01
+      - ./dns/bind/db.lan02:/etc/bind/zones/db.lan02
 
     restart: on-failure
     command: ["sleep","infinity"]
@@ -172,8 +173,8 @@ services:
     #  - ./ubuntu/interfaces:/etc/network/interfaces
     restart: on-failure
     command: ["sleep","infinity"]
-    #depends_on:
-    #  - dhcp1
+    depends_on:
+      - dhcp1
     cap_add:
       - NET_ADMIN
       - SYS_MODULE

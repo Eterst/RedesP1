@@ -2,15 +2,20 @@
 
 zone "lan01.io" {   
     type master;
-    file "/etc/bind/db.lan01";
+    file "/etc/bind/zones/db.lan01";
+    allow-transfer { internals; };
 };
 
 zone "lan02.io" {   
     type master;
-    file "/etc/bind/db.lan02";
+    file "/etc/bind/zones/db.lan02";
+    allow-transfer { internals; };
 };
 
 zone "google.com" {   
     type master;
-    file "/etc/bind/db.google";
+    file "/etc/bind/zones/db.google";
+    allow-transfer { internals; };
 };
+
+include "/etc/bind/zones.rfc1918";

@@ -1,11 +1,20 @@
-acl goodclients {
+acl internals {
         10.0.0.0/24;
         10.0.10.0/24;
         localhost;
         localnets;
 };
 
+
+
+
 options {
+
+        // enable the query log
+        querylog yes;
+
+        //allow-recursion { 127.0.0.1; 10.0.0.3/24; 10.0.0.0/24; };
+
         directory "/var/cache/bind";
 
         recursion yes;

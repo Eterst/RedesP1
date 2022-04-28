@@ -17,7 +17,8 @@ RUN  apt-get update -y &&\
      apt-get install procps &&\
      apt-get install -y isc-dhcp-server
 
-ENV LANG en_US.utf8
+# Client requests
+EXPOSE 67/udp
 
 ENTRYPOINT ["/bin/sh","/bash.sh"]
 

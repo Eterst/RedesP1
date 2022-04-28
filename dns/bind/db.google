@@ -1,15 +1,15 @@
 $TTL    604800
-@       IN      SOA     ns1.google.com. root.google.com. (
-                  3       ; Serial
+@       IN      SOA     ns3.google.com. root.google.com. (
+                  366161       ; Serial
              604800     ; Refresh
               86400     ; Retry
             2419200     ; Expire
              604800 )   ; Negative Cache TTL
 ;
 ; name servers - NS records
-     IN      NS      ns1.google.com.
+     IN      NS      ns3.google.com.
 
 ; name servers - A records
-ns1.google.com.         IN      A      10.0.0.3
+ns3.google.com.         IN      A      10.0.0.3
 
 www.google.com.        IN      A      10.0.0.20

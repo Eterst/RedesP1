@@ -8,7 +8,8 @@ RUN apt-get update \
 
 RUN  apt-get install -y dnsutils &&\
      apt-get install -y iputils-ping &&\
-     apt-get install -y syslog-ng
+     apt-get install -y syslog-ng &&\
+     apt install -y ufw
 # Enable IPv4
 RUN sed -i 's/OPTIONS=.*/OPTIONS="-4 -u bind"/' /etc/default/bind9
 
