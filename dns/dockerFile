@@ -1,20 +1,23 @@
-FROM ubuntu
+FROM ubuntu:bionic
 
-#instalar el servidor bind
-RUN apt-get update && \
-     apt-get install -y dnsutils &&\
-     apt-get install -y iputils-ping && \
-     apt-get install -y bind9
+RUN apt-get update \
+  && apt-get install -y \
+  bind9 \
+  bind9utils \
+  bind9-doc
 
+RUN  apt-get install -y dnsutils &&\
+     apt-get install -y iputils-ping &&\
+     apt-get install -y syslog-ng
+# Enable IPv4
+RUN sed -i 's/OPTIONS=.*/OPTIONS="-4 -u bind"/' /etc/default/bind9
 
-#RUN apt-get install -y dnsutils
+# Copy configuration files
+#COPY named.conf.options /etc/bind/
+#COPY named.conf.local /etc/bind/
+#COPY db.nagoya-foundation.com /etc/bind/zones/
 
-#RUN /etc/init.d/bind9 restart
+# Run eternal loop
+CMD ["/bin/bash", "-c", "while :; do sleep 10; done"]
 
-#RUN chmod +rwx /etc/resolv.conf
-#RUN echo "nameserver 10.0.0.3" > /etc/resolv.conf
-
-
-
-# Copiar la configuracion del archivo hacia el contenedor
-#RUN cp -v /dns/named.conf.options /etc/bind/named.conf.options
+ENTRYPOINT ["/bin/sh","/bash.sh"]

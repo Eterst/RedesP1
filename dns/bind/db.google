@@ -1,16 +1,15 @@
-;
-; BIND data file for local loopback interface
-;
 $TTL    604800
-@   IN  SOA google.com. root.google.com. (
-                  1     ; Serial
+@       IN      SOA     ns1.google.com. root.google.com. (
+                  3       ; Serial
              604800     ; Refresh
               86400     ; Retry
             2419200     ; Expire
              604800 )   ; Negative Cache TTL
+;
+; name servers - NS records
+     IN      NS      ns1.google.com.
 
+; name servers - A records
+ns1.google.com.         IN      A      10.0.0.3
 
-                  IN      NS      google.com.
-                  IN      A       10.0.0.3
-
-;www              IN      A       10.0.0.20
+www.google.com.        IN      A      10.0.0.20

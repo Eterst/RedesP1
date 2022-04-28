@@ -35,6 +35,7 @@ services:
         constraints: [node.role == manager]
     restart: on-failure
     command: ["sleep","infinity"] 
+    tty: true
     privileged: true
     ports:
       - "67/udp"
@@ -43,6 +44,7 @@ services:
       - ./dhcp_server/dhcpd.conf:/etc/dhcp/dhcpd.conf
       - ./dhcp_server/isc-dhcp-server:/etc/default/isc-dhcp-server
       - ./dhcp_server/interfaces:/etc/network/interfaces
+      - ./dhcp_server/rndc.conf:/etc/bind/rndc.conf
     cap_add:
       - NET_ADMIN
     environment:
@@ -56,12 +58,15 @@ services:
     build: 
       context: ./dns
       dockerfile: dockerFile
+    user: root
     container_name: dns
     volumes:
       #- ./dns/:/etc/
+      - ./dns/bash.sh:/bash.sh
       - ./dns/resolv.conf:/etc/resolv.conf
       - ./dns/bind/named.conf.local:/etc/bind/named.conf.local
       - ./dns/bind/named.conf.options:/etc/bind/named.conf.options
+      - ./dns/rndc.conf:/etc/bind/rndc.conf
       
       #
       - ./dns/bind/db.google:/etc/bind/db.google
@@ -70,6 +75,12 @@ services:
 
     restart: on-failure
     command: ["sleep","infinity"]
+    tty: true
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - HTTP_USER=foo
+      - HTTP_PASS=bar
     networks:
       vlan-1:
         ipv4_address: 10.0.0.3
