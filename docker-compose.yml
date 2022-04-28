@@ -30,6 +30,7 @@ services:
         constraints: [node.role == manager]
     restart: on-failure
     command: ["sleep","infinity"] 
+    tty: true
     privileged: true
     ports:
       - "67/udp"
