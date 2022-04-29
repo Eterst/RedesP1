@@ -13,6 +13,4 @@ rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
 RUN yum -y install wireshark iproute net-tools
 VOLUME [ "/sys/fs/cgroup" ]
-#RUN yum -y install httpd; yum clean all; systemctl enable httpd.service
-#EXPOSE 80
 CMD ["/usr/sbin/init"]
