@@ -1,6 +1,7 @@
 # Proyecto numero 1 del curso de Redes
 
-Como correr el proyecto:
+##Cómo correr el proyecto:
+Para instalar docker y docker compose, se puede realizar de la siguiente página: https://docs.docker.com/get-docker/
 
 - En windows:
     Instalar WSL
@@ -13,8 +14,10 @@ Como correr el proyecto:
     instalar docker compose
     entrar a la carpeta y correr docker
 
-Pruebas que se pueden realizar para el programa:
+##Pruebas que se pueden realizar para el programa:
 
-Recomendaciones y concluciones:
-
+##Recomendaciones
 - hacer las partes por aparte siguiendo las guias y verificar que funcionan con las configuraciones de las guias primero e ir progresivamente adaptandolo a las necesidades del proyecto
+- 
+
+##Concluciones
