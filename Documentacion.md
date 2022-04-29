@@ -24,9 +24,9 @@ Recomendaciones:
 ##Recomendaciones
 - hacer las partes por aparte siguiendo las guias y verificar que funcionan con las configuraciones de las guias primero e ir progresivamente adaptandolo a las necesidades del proyecto
 
-- 
+- Al trabajar con un proxy inverso y varios servidores, lo aconsejable es utilizar la misma tecnología, por ejemplo se utilizó nginx para el proxy reverso y también para los servidores.
 
-##Concluciones
+##Conclusiones
 
 
 - pueden usar <https://www.composerize.com/> con cuidado
