@@ -35,7 +35,7 @@
 
 6. Para entender que es lo que hace cada parte de la configuracion de los VPNs es muy util visiar la documentacion que OpenVpn tiene al respecto en <https://github.com/OpenVPN/openvpn/blob/master/sample/sample-config-files/server.conf>.
 
-7. usar centos para los routers
+7. Cuando se usa ubuntu como contenedor de docker se puede llegar a algunos problemas con systemd que es un conjunto de daemons del sistema e incluso algunas utilidades como sysctl, una forma de solucionar estos problemas es usando una imagen de CentOS en lugar de una de ubuntu, CentOS es muy similar a Ubuntu y en la mayoria de los casos hay pocas modificaciones con respecto a ubuntu, por esto es recomendado usar CentOS para imagen base a configurar en lugar de Ubuntu
 
 8. a
 9. b
