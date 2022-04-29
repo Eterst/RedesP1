@@ -14,7 +14,8 @@
 
 ## Pruebas que se pueden realizar para el programa
 
-Pruebas del Router 1 (Estando dentro del cliente 1):
+1. Pruebas del Router 1 (Con una consola dentro del cliente 1):
+
 - ```traceroute www.google.com```
   - Prueba que el 1 sea el IP 10.0.0.10 que es el ip del Router 1
   - Prueba que el 2 sea el Gateway de la red Bridge con el host
@@ -45,4 +46,5 @@ Pruebas del Router 1 (Estando dentro del cliente 1):
 1. Al trabajar con un proxy inverso y varios servidores, lo aconsejable es utilizar la misma tecnología, por ejemplo se utilizó nginx para el proxy reverso y también para los servidores.
   
 2. Al iniciar un servicio dentro de un contenedor basado en alguna distribución de linux, no se puede utilizar Systemctl, sino que lo que se recomienda es tener un archivo.sh, llamarlo después de iniciar el servicio, esto se hace con el comando ENTRYPOINT, dentro del archivo colocar /etc/init.d/[servicio a iniciar] y debajo de esa linea agregar tail -f /dev/null, con esto el servicio dentro del contendor iniciará correctamente.
-  
+
+3. Las diferencias más importantes entre TCP y UDP vienen a ser la necesidad de establecer una necesidad antes de enviar información que existe en TCP y la bajo overhead o carga adicional que existe en UDP con el costo de no contar con algunas funcionalidades útiles cuando se trata con conexiones inestables.
