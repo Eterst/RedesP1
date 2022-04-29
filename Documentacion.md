@@ -5,7 +5,7 @@
 ### <font size="5">**En Windows**</font>
 
 1. Instalar Docker y Docker Compose, para esto se puede apoyar en la siguiente página: <https://docs.docker.com/desktop/windows/install/>
-    - Puede descargar el ejecutable que incluse Docker y Docker Compose en: <https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe>
+    - Puede descargar el ejecutable que incluye Docker y Docker Compose en: <https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe>
 2. Entrar a la carpeta del proyecto, utilizando la consola de windows y el comando 'cd' desplazarse en los directorios del sistema hasta encontrar la carpeta donde se encuentra el proyecto, también se puede utilizar la dirección completa del archivo.
 3. Una vez se tiene la consola ubicada dentro de la dirección del proyecto utilizar el comando:  
 
@@ -48,7 +48,7 @@
 
 #### <font size="4">**Instalar Docker Engine:**</font>
 
-1. Instalamos la ultima version de Docker Engine, containerd y Docker Compose:
+1. Instalamos la última versión de Docker Engine, containerd y Docker Compose:
 
     - ```bash
       sudo apt-get update && \
@@ -162,44 +162,44 @@
 
 ## **Recomendaciones**
 
-1. Asegurarse de entender, almenos en un nivel superficial, lo que estas modificando antes de aceptarlo como un hecho o bien decir "así funciona".
+1. Asegurarse de entender, al menos en un nivel superficial, lo que estás modificando antes de aceptarlo como un hecho o bien decir "así funciona".
 
-2. Al seguir una guía para la implementación de una parte de la red intentar implementar las partes en proyectos independientes que imiten el ambiente de la guia para probar y endender mejor su comporamiento para verificar que funcionan con las configuraciones mostradas primero e ir progresivamente adaptandolo a las necesidades del proyecto.
+2. Al seguir una guía para la implementación de una parte de la red intentar implementar las partes en proyectos independientes que imitan el ambiente de la guía para probar y entender mejor su comportamiento para verificar que funcionan con las configuraciones mostradas primero e ir progresivamente adaptándolo a las necesidades del proyecto.
 
 3. Al trabajar con un proxy inverso y varios servidores, lo aconsejable es utilizar la misma tecnología, por ejemplo se utilizó nginx para el proxy reverso y también para los servidores.
 
-4. Docker parece ser una tecnologia más ampliamante utilizada que docker compose en sí, para muchos casos si se quiere traducir una instrucción de docter a una estructura de docker compose se puede usar <https://www.composerize.com/>, esto también ayuda a entender mejor o visualizar lo que hace la instrucción traducida en cuestión.
+4. Docker parece ser una tecnología más ampliamente utilizada que docker compose en sí, para muchos casos si se quiere traducir una instrucción de docter a una estructura de docker compose se puede usar <https://www.composerize.com/>, esto también ayuda a entender mejor o visualizar lo que hace la instrucción traducida en cuestión.
 
 5. Para la implementación del vpn la imagen de <https://github.com/kylemanna> es muy muy popular y útil.
 
 6. Para entender que es lo que hace cada parte de la configuración de los VPNs es muy útil visitar la documentación que OpenVpn tiene al respecto en <https://github.com/OpenVPN/openvpn/blob/master/sample/sample-config-files/server.conf>.
 
-7. Cuando se usa ubuntu como contenedor de docker se puede llegar a algunos problemas con systemd que es un conjunto de daemons del sistema e incluso algunas utilidades como sysctl, una forma de solucionar estos problemas es usando una imagen de CentOS en lugar de una de ubuntu, CentOS es muy similar a Ubuntu y en la mayoria de los casos hay pocas modificaciones con respecto a ubuntu, por esto es recomendado usar CentOS para imagen base a configurar en lugar de Ubuntu.
+7. Cuando se usa ubuntu como contenedor de docker se puede llegar a algunos problemas con systemd que es un conjunto de daemons del sistema e incluso algunas utilidades como sysctl, una forma de solucionar estos problemas es usando una imagen de CentOS en lugar de una de ubuntu, CentOS es muy similar a Ubuntu y en la mayoría de los casos hay pocas modificaciones con respecto a ubuntu, por esto es recomendado usar CentOS para imagen base a configurar en lugar de Ubuntu.
 
-8. Al crear el router no hay que olvidarse de habilitar la NAT en todo el trafico de red ya que si no lo habilitamos y hacemos pruebas con traceroute los paquetes aunque pasarán por el router no llegarán a ningúna parte, esto puede hacer que estemos horas viendo que esta pasando pensando en cosas mas complicadas cuando el error es algo simple.
+8. Al crear el router no hay que olvidarse de habilitar la NAT en todo el tráfico de red ya que si no lo habilitamos y hacemos pruebas con traceroute los paquetes aunque pasarán por el router no llegarán a ningúna parte, esto puede hacer que estemos horas viendo que está pasando pensando en cosas más complicadas cuando el error es algo simple.
 
-9. Es recomendable el uso de los volumes en docker compose para copiar configuraciones dentro de los contenedores, esto ayuda crear el archivo y la carpeta en caso de que no exista, además nos saltamos dolores de cabeza relacionados a los permisos.
+9. Es recomendable el uso de los volúmenes en docker compose para copiar configuraciones dentro de los contenedores, esto ayuda crear el archivo y la carpeta en caso de que no exista, además nos saltamos dolores de cabeza relacionados a los permisos.
 
 10. Para utilizar algún servicio interno como es el dhcp o dns dentro de la red, hay que desactivar el de docker, ya que sino docker por ejemplo asignará una ip automaticamente aunque ya hubiesemos creado el dhcp aparte, por lo tanto hay que desactivar estas configuraciones.
 
 ## **Conclusiones**
 
 1. Al trabajar con un proxy inverso y varios servidores, lo aconsejable es utilizar la misma tecnología, por ejemplo se utilizó nginx para el proxy reverso y también para los servidores.
-  
-2. Al iniciar un servicio dentro de un contenedor basado en alguna distribución de linux, no se puede utilizar Systemctl, sino que lo que se recomienda es tener un archivo.sh, llamarlo después de iniciar el servicio, esto se hace con el comando ENTRYPOINT, dentro del archivo colocar /etc/init.d/[servicio a iniciar] y debajo de esa linea agregar tail -f /dev/null, con esto el servicio dentro del contendor iniciará correctamente.
+
+2. Al iniciar un servicio dentro de un contenedor basado en alguna distribución de linux, no se puede utilizar Systemctl, sino que lo que se recomienda es tener un archivo.sh, llamarlo después de iniciar el servicio, esto se hace con el comando ENTRYPOINT, dentro del archivo colocar /etc/init.d/[servicio a iniciar] y debajo de esa línea agregar tail -f /dev/null, con esto el servicio dentro del contenedor iniciará correctamente.
 
 3. Las diferencias más importantes entre TCP y UDP vienen a ser la necesidad de establecer una necesidad antes de enviar información que existe en TCP y la bajo overhead o carga adicional que existe en UDP con el costo de no contar con algunas funcionalidades útiles cuando se trata con conexiones inestables.
 
 4. Docker Compose es una gran herramienta para facilitar la coordinación de proyectos usando múltiples contenedores que se comportan de manera similar a máquinas virtuales, una de las grandes ayudas que el mismo proporciona es la implementación de la capa de enlace bridge que redirige el tráfico de red al host de manera que si queremos restringir el acceso a la red de Docker podemos hacerlo desde el Host.
 
-5. Se profundizó el entedimiento de los servicios de red gracias a que se tuvieron que realizar configuraciones manuales las cuales ayudaron a profundizar el conocimiento de cómo es que funcionan estas herramientas.
+5. Se profundizó el entendimiento de los servicios de red gracias a que se tuvieron que realizar configuraciones manuales las cuales ayudaron a profundizar el conocimiento de cómo es que funcionan estas herramientas.
 
-6. En una red existen muchas dependencias entre cada dispositivo que se pueden volver molestas a la hora de desarrollar una lan personal en docker-compose, siempre se puede aprovechar de servicios publicos como el DNS de google o de OpenVPN, pero en caso de querer desarrollar todo el sistema es importante mantener un orden de operacion para reducir la cantidad de tiempo que existe entre el desarrollo de una parte de la red y el momento en que esta parte se puede probar y debuggear de ser necesario.
+6. En una red existen muchas dependencias entre cada dispositivo que se pueden volver molestas a la hora de desarrollar una lan personal en docker-compose, siempre se puede aprovechar de servicios públicos como el DNS de google o de OpenVPN, pero en caso de querer desarrollar todo el sistema es importante mantener un orden de operación para reducir la cantidad de tiempo que existe entre el desarrollo de una parte de la red y el momento en que esta parte se puede probar y debuggear de ser necesario.
 
 7. Docker facilita muchas cosas a la hora de levantar un servicio, pero antes de comenzar a trabajar con docker, se necesita leer bastante la documentación y ver bastante información de cómo es que trabaja y que ofrece.
 
 8. Si se trabaja cada contenedor con un dockerFile es posible modularizar el proyecto y utilizar el dockerFile para agregar comandos y otros útiles necesarios para la configuración y la ejecución del contenedor en el ambiente.
 
-9. En gran parte de las ocaciones es mejor utilizar una imagen "vacía" como ubuntu, y luego instalarle las herramientas que necesitemos, en especial en un ambiente educativo, ya que con una imagen vacía aprendemos a profundidad la herramienta que usaremos.
+9. En gran parte de las ocasiones es mejor utilizar una imagen "vacía" como ubuntu, y luego instalar las herramientas que necesitemos, en especial en un ambiente educativo, ya que con una imagen vacía aprendemos a profundidad la herramienta que usaremos.
 
 10. A la hora de estimar el tiempo que tomará realizar un trabajo a la hora de delegarlo a una parte de un grupo es importante tener en consideración no solo la carga en código sino que también la carga investigativa y la cantidad de dependencias que conlleva ese trabajo, en muchos casos es muy útil llevar un repositorio de enlaces ya sea de documentación, de stackoverflow o artículos para compartir y apoyarse a finalizar más rápidamente la carga investigativa.
