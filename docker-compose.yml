@@ -173,8 +173,8 @@ services:
     #  - ./ubuntu/interfaces:/etc/network/interfaces
     restart: on-failure
     command: ["sleep","infinity"]
-    depends_on:
-      - dhcp1
+    #depends_on:
+    #- dhcp1
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
