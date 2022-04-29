@@ -168,9 +168,9 @@ services:
       dockerfile: dockerFile
     container_name: ubuntu
     privileged: true
-    volumes:
+    #volumes:
     #  - ./ubuntu/resolv.conf:/etc/resolv.conf
-      - ./ubuntu/interfaces:/etc/network/interfaces
+    #  - ./ubuntu/interfaces:/etc/network/interfaces
     restart: on-failure
     command: ["sleep","infinity"]
     depends_on:
