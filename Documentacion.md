@@ -14,6 +14,12 @@
 
 ## Pruebas que se pueden realizar para el programa
 
+Pruebas del Router 1 (Estando dentro del cliente 1):
+- ```traceroute www.google.com```
+  - Prueba que el 1 sea el IP 10.0.0.10 que es el ip del Router 1
+  - Prueba que el 2 sea el Gateway de la red Bridge con el host
+  - Prueba la conexión a internet, asegurando que el paquete llega a www.google.com
+
 ## Recomendaciones
 
 1. Asegurarse de entender, almenos en un nivel superficial, lo que estas modificando antes de aceptarlo como un hecho o bien decir "asi funciona".
