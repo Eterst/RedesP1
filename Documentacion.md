@@ -38,8 +38,10 @@
 7. usar centos para los routers
 
 8. a
-9. b
-10. c
+   
+9.  Es recomendable el uso de los volumes en docker compose para copiar configuraciones dentro de los contenedores, esto ayuda crear el archivo y la carpeta en caso de que no exista, además nos saltamos dolores de cabeza relacionados a los permisos.
+    
+10. Para utilizar algún servicio interno como es el dhcp o dns dentro de la red, hay que desactivar el de docker, ya que sino docker por ejemplo asignará una ip automaticamente aunque ya hubiesemos creado el dhcp aparte, por lo tanto hay que desactivar estas configuraciones.
 
 ## Conclusiones
 
@@ -48,3 +50,19 @@
 2. Al iniciar un servicio dentro de un contenedor basado en alguna distribución de linux, no se puede utilizar Systemctl, sino que lo que se recomienda es tener un archivo.sh, llamarlo después de iniciar el servicio, esto se hace con el comando ENTRYPOINT, dentro del archivo colocar /etc/init.d/[servicio a iniciar] y debajo de esa linea agregar tail -f /dev/null, con esto el servicio dentro del contendor iniciará correctamente.
 
 3. Las diferencias más importantes entre TCP y UDP vienen a ser la necesidad de establecer una necesidad antes de enviar información que existe en TCP y la bajo overhead o carga adicional que existe en UDP con el costo de no contar con algunas funcionalidades útiles cuando se trata con conexiones inestables.
+
+4. Se aprendió mucho acerca de los diferentes servicios proporcionados y que hacen funcionar a una
+   red y a sus dispositivos conectados.
+
+5. Se logró aprender y entender a profundidad el potencial que tiene docker compose para facilitar la
+creación de muchos tipos de proyectos.
+
+6. 
+
+7. d
+
+8. d
+
+9.  d
+
+10. d
