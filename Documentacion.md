@@ -37,7 +37,7 @@
 
 7. Cuando se usa ubuntu como contenedor de docker se puede llegar a algunos problemas con systemd que es un conjunto de daemons del sistema e incluso algunas utilidades como sysctl, una forma de solucionar estos problemas es usando una imagen de CentOS en lugar de una de ubuntu, CentOS es muy similar a Ubuntu y en la mayoria de los casos hay pocas modificaciones con respecto a ubuntu, por esto es recomendado usar CentOS para imagen base a configurar en lugar de Ubuntu
 
-8. a
+8. Al crear el router no hay que olvidarse de habilitar la NAT en todo el trafico de red ya que si no lo habilitamos y hacemos pruebas con traceroute los paquetes aunque pasarán por el router no llegaran a ningúna parte, esto puede hacer que estemos horas viendo que esta pasando pensando en cosas mas complicadas cuando el error es algo simple.
    
 9.  Es recomendable el uso de los volumes en docker compose para copiar configuraciones dentro de los contenedores, esto ayuda crear el archivo y la carpeta en caso de que no exista, además nos saltamos dolores de cabeza relacionados a los permisos.
     
