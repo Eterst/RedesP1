@@ -29,15 +29,15 @@
 
 3. Al trabajar con un proxy inverso y varios servidores, lo aconsejable es utilizar la misma tecnología, por ejemplo se utilizó nginx para el proxy reverso y también para los servidores.
 
-4. Docker parece ser una tecnologia mas ampliamante utilizada que docker compose en si, para muchos casos si se quiere traducir una instruccion de docter a una estructura de docker compose se puede usar <https://www.composerize.com/>, esto tambien ayuda a entender mejor o visualizar lo que hace la instruccion traducida en cuestion.
+4. Docker parece ser una tecnologia mas ampliamante utilizada que docker compose en si, para muchos casos si se quiere traducir una instruccion de docter a una estructura de docker compose se puede usar <https://www.composerize.com/>, esto tambien ayuda a entender mejor o visualizar lo que hace la instruccion traducida en cuestión.
 
 5. Para la implementacion del vpn la imagen de <https://github.com/kylemanna> es muy muy popular y util.
 
 6. Para entender que es lo que hace cada parte de la configuracion de los VPNs es muy util visiar la documentacion que OpenVpn tiene al respecto en <https://github.com/OpenVPN/openvpn/blob/master/sample/sample-config-files/server.conf>.
 
-7. Cuando se usa ubuntu como contenedor de docker se puede llegar a algunos problemas con systemd que es un conjunto de daemons del sistema e incluso algunas utilidades como sysctl, una forma de solucionar estos problemas es usando una imagen de CentOS en lugar de una de ubuntu, CentOS es muy similar a Ubuntu y en la mayoria de los casos hay pocas modificaciones con respecto a ubuntu, por esto es recomendado usar CentOS para imagen base a configurar en lugar de Ubuntu
+7. usar centos para los routers
 
-8. Al crear el router no hay que olvidarse de habilitar la NAT en todo el trafico de red ya que si no lo habilitamos y hacemos pruebas con traceroute los paquetes aunque pasarán por el router no llegaran a ningúna parte, esto puede hacer que estemos horas viendo que esta pasando pensando en cosas mas complicadas cuando el error es algo simple.
+8. a
    
 9.  Es recomendable el uso de los volumes en docker compose para copiar configuraciones dentro de los contenedores, esto ayuda crear el archivo y la carpeta en caso de que no exista, además nos saltamos dolores de cabeza relacionados a los permisos.
     
@@ -57,12 +57,12 @@
 5. Se logró aprender y entender a profundidad el potencial que tiene docker compose para facilitar la
 creación de muchos tipos de proyectos.
 
-6. 
+6. Se profundizó el entedimiento de los servicios de red gracias a que se tuvieron que realizar configuraciones manuales las cuales ayudaron a profundizar el conocimiento de cómo es que funcionan estas herramientas. 
 
-7. d
+7. Aprendimos que algunos servicios dentro de una red no necesariamente puede trabajar solo, sino que algunos necesitan de otros para poder funcionar correctamente.
 
-8. d
+8. Comprendimos que docker facilita muchas cosas a la hora de levantar un servicio, pero antes de comenzar a trabajar con docker, se necesita leer bastante la documentación y ver bastante información de cómo es que trabaja y que ofrece.
 
-9.  d
-
-10. d
+9. Siempre trabajar cada contenedor con un dockerFile, ya que este archivo puede llenarse de muchas herramientas necesarias para el contenedor.  
+    
+10. Entendimos que en gran parte de las ocaciones es mejor utilizar una imagen "vacía" como ubuntu, y luego instalarle las herramientas que necesitemos. A diferencia de descargar una imagen ya con todo eso. Ya que con una imagen vacía aprendemos a profundidad la herramienta que usaremos.
