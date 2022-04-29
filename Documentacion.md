@@ -15,6 +15,10 @@ Como correr el proyecto:
 
 Pruebas que se pueden realizar para el programa:
 
-Recomendaciones y concluciones:
+Recomendaciones:
 
 - hacer las partes por aparte siguiendo las guias y verificar que funcionan con las configuraciones de las guias primero e ir progresivamente adaptandolo a las necesidades del proyecto
+
+Concluciones:
+
+- xd
