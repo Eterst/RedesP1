@@ -1,5 +1,4 @@
 
-
 zone "lan01.io" {   
     type master;
     file "/etc/bind/zones/db.lan01";

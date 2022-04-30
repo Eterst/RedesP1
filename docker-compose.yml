@@ -42,14 +42,15 @@ services:
     command: ["sleep","infinity"] 
     tty: true
     privileged: true
-    ports:
-      - "67/udp"
+    #ports:
+    #  - "67/udp"
     volumes:
+      - ./dhcp_server/rndc.key:/etc/dhcp/rndc.key
       - ./dhcp_server/bash.sh:/bash.sh
       - ./dhcp_server/dhcpd.conf:/etc/dhcp/dhcpd.conf
       - ./dhcp_server/isc-dhcp-server:/etc/default/isc-dhcp-server
       - ./dhcp_server/interfaces:/etc/network/interfaces
-      - ./dhcp_server/rndc.conf:/etc/bind/rndc.conf
+      - ./dhcp_server/rndc.conf:/etc/dhcp/rndc.conf
     cap_add:
       - NET_ADMIN
     environment:
@@ -66,13 +67,14 @@ services:
     user: root
     container_name: dns
     volumes:
-      #- ./dns/:/etc/
+      - ./dns/rndc.key:/etc/dhcp/rndc.key
+      - ./dns/named.conf:/etc/bind/named.conf
       - ./dns/bash.sh:/bash.sh
       #- ./dns/resolv.conf:/etc/systemd/resolv.conf
       - ./dns/resolved.conf:/etc/systemd/resolved.conf
       - ./dns/bind/named.conf.local:/etc/bind/named.conf.local
       - ./dns/bind/named.conf.options:/etc/bind/named.conf.options
-      #- ./dns/rndc.conf:/etc/bind/rndc.conf
+      - ./dns/rndc.conf:/etc/dhcp/rndc.conf
       
       #
       - ./dns/bind/db.google:/etc/bind/zones/db.google
@@ -177,15 +179,15 @@ services:
     command: >-
       sh -c "ip route replace default via 10.0.0.10 &&
       tail -f /dev/null"
-    #volumes:
-    #  - ./ubuntu/resolv.conf:/etc/resolv.conf
-    #  - ./ubuntu/interfaces:/etc/network/interfaces
+    volumes:
+      - ./ubuntu/resolv.conf:/etc/resolv.conf
+      - ./ubuntu/interfaces:/etc/network/interfaces
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
     depends_on:
-      - router1
-    #  - dhcp1
+    #  - router1
+      - dhcp1
     networks:
       vlan-1:
 

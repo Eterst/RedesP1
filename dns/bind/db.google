@@ -10,6 +10,6 @@ $TTL    604800
      IN      NS      ns3.google.com.
 
 ; name servers - A records
-ns3.google.com.         IN      A      10.0.0.3
+ns3         IN      A      10.0.0.3
 
-www.google.com.        IN      A      10.0.0.20
+www       IN      A      10.0.0.20

@@ -10,11 +10,11 @@ $TTL    604800
      IN      NS      ns1.lan01.io.
 
 ; name servers - A records
-ns1.lan01.io.         IN      A      10.0.0.3
-lan01.io.         IN      A      10.0.0.3
-dhcp1.lan01.io.             IN      A       10.0.0.4
-proxyReverso.lan01.io.     IN      A       10.0.0.20
-;webCache.lan01.io.         IN      A       10.0.0.7
-web.lan01.io.               IN      A       10.0.0.21
-www.lan01.io.              IN      A       10.0.0.20
+ns1         IN      A      10.0.0.3
+lan01         IN      A      10.0.0.3
+dhcp1             IN      A       10.0.0.4
+proxyReverso     IN      A       10.0.0.20
+;webCache        IN      A       10.0.0.7
+web               IN      A       10.0.0.21
+www              IN      A       10.0.0.20
 ;Router1          IN      A       10.0.0.1

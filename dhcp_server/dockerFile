@@ -15,10 +15,12 @@ RUN  apt-get update -y &&\
      apt-get install -y iputils-ping && \
      apt-get install -yqq daemonize dbus-user-session fontconfig &&\
      apt-get install procps &&\
+     apt-get install -y bind9utils &&\
      apt-get install -y isc-dhcp-server
 
+
 # Client requests
-EXPOSE 67/udp
+#EXPOSE 67/udp
 
 ENTRYPOINT ["/bin/sh","/bash.sh"]
 
