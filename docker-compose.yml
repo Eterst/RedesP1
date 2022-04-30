@@ -22,11 +22,36 @@ services:
       tail -f /dev/null"
     volumes:
       - "./router1/sysctl.conf:/etc/sysctl.conf"
-    #  - ./router1/bash.sh:/bash.sh
     networks:
       host-bridge:
       vlan-1:
         ipv4_address: 10.0.0.10
+
+  router2:
+    build: 
+      context: ./router1
+      dockerfile: dockerFile
+    container_name: router2
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.tcp_timestamps=0
+    command: >-
+      sh -c "sysctl -p &&
+      iptables -t nat -A POSTROUTING -j MASQUERADE &&
+      tail -f /dev/null"
+    volumes:
+      - "./router1/sysctl.conf:/etc/sysctl.conf"
+    depends_on:
+      - router1
+    networks:
+      vlan-1:
+        ipv4_address: 10.0.0.2
+      vlan-2:
+        ipv4_address: 10.0.1.2
 
   dhcp1:
     build: 
@@ -190,6 +215,27 @@ services:
       - dhcp1
     networks:
       vlan-1:
+
+  cliente_02:
+    build: 
+      context: ./ubuntu
+      dockerfile: dockerFile
+    container_name: ubuntu2
+    privileged: true
+    restart: on-failure
+    command: >-
+      sh -c "ip route replace default via 10.0.1.2 &&
+      tail -f /dev/null"
+    volumes:
+      - ./ubuntu/resolv.conf:/etc/resolv.conf
+      - ./ubuntu/interfaces:/etc/network/interfaces
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    depends_on:
+      - router2
+    networks:
+      vlan-2:
 
 networks:
   host-bridge:
