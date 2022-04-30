@@ -18,11 +18,24 @@ services:
       - net.ipv4.tcp_timestamps=0
     command: >-
       sh -c "sysctl -p &&
-      iptables --append INPUT --protocol tcp --jump ACCEPT && 
-      iptables --append INPUT --protocol udp --jump ACCEPT && 
-      iptables --append OUTPUT --protocol tcp --jump ACCEPT && 
-      iptables --append OUTPUT --protocol udp --jump ACCEPT && 
       iptables -t nat -A POSTROUTING -j MASQUERADE && 
+      iptables --append OUTPUT --protocol udp --jump ACCEPT && 
+      iptables --append OUTPUT --protocol tcp --sport 80 --jump ACCEPT && 
+      iptables --append OUTPUT --protocol tcp --sport 443 --jump ACCEPT && 
+      iptables --append INPUT --protocol tcp --sport 80 --jump ACCEPT && 
+      iptables --append INPUT --protocol tcp --sport 443 --jump ACCEPT && 
+      iptables --append INPUT --protocol tcp --sport 3128 --jump ACCEPT && 
+      iptables --append INPUT --protocol tcp --sport 8443 --jump ACCEPT && 
+      iptables --append INPUT --protocol tcp --sport 53 --jump ACCEPT && 
+      iptables --append INPUT --protocol udp --sport 53 --jump ACCEPT && 
+      iptables -t nat --append FORWARD --protocol tcp --jump ACCEPT &&
+      iptables -t nat --append FORWARD --protocol udp --jump ACCEPT &&
+      iptables -t nat --append PREROUTING --protocol tcp --sport 80 --dst 10.0.0.20 --jump DNAT ACCEPT &&
+      iptables -t nat --append PREROUTING --protocol tcp --sport 443 --dst 10.0.0.20 --jump DNAT ACCEPT &&
+      iptables -t nat --append PREROUTING --protocol tcp --sport 8443 --dst 10.0.0.2 --dport 8443 --jump DNAT ACCEPT &&
+      iptables -t nat --append PREROUTING --protocol tcp --sport 53 --dst 10.0.0.3 --jump DNAT ACCEPT &&
+      iptables -t nat --append PREROUTING --protocol udp --sport 53 --dst 10.0.0.3 --jump DNAT ACCEPT &&
+      iptables -t nat --append PREROUTING --protocol tcp --src 10.0.0.0/24 --dst 10.0.1.0/24 --jump DNAT ACCEPT &&
       tail -f /dev/null"
     volumes:
       - "./router1/sysctl.conf:/etc/sysctl.conf"
@@ -45,12 +58,27 @@ services:
       - net.ipv4.tcp_timestamps=0
     command: >-
       sh -c "sysctl -p &&
-      iptables --append INPUT --protocol tcp --jump ACCEPT && 
-      iptables --append INPUT --protocol udp --jump ACCEPT && 
-      iptables --append OUTPUT --protocol tcp --jump ACCEPT && 
-      iptables --append OUTPUT --protocol udp --jump ACCEPT && 
       ip route replace default via 10.0.0.10 && 
       iptables -t nat -A POSTROUTING -j MASQUERADE && 
+      iptables --append OUTPUT --protocol tcp --jump ACCEPT && 
+      iptables --append OUTPUT --protocol udp --jump ACCEPT && 
+      iptables -t nat --append OUTPUT --protocol tcp --sport 80 --src 10.0.1.0/24 --dst 10.0.0.0/24 --jump ACCEPT && 
+      iptables -t nat --append OUTPUT --protocol tcp --sport 443 --src 10.0.1.0/24 --dst 10.0.0.0/24 --jump ACCEPT && 
+      iptables -t nat --append OUTPUT --protocol icmp --icmp-type any --sport 443 --src 10.0.1.0/24 --dst 10.0.0.0/24 --jump ACCEPT && 
+      iptables -t nat --append OUTPUT --protocol icmp --icmp-type any --sport 443 --src 10.0.1.0/24 --dst 10.0.0.0/24 --jump ACCEPT && 
+      iptables -t nat --append OUTPUT --protocol icmp --icmp-type any --sport 443 --src 10.0.1.0/24 --dst 10.0.0.0/24 --jump ACCEPT && 
+      iptables -t nat --append OUTPUT --protocol icmp --icmp-type any --sport 443 --src 10.0.1.0/24 --dst 10.0.0.0/24 --jump ACCEPT && 
+      iptables -t nat --append INPUT --protocol tcp --sport 80 --src 10.0.0.0/24 --dst 10.0.1.0/24 --jump ACCEPT && 
+      iptables -t nat --append INPUT --protocol tcp --sport 443 --src 10.0.0.0/24 --dst 10.0.1.0/24 --jump ACCEPT && 
+      iptables -t nat --append INPUT --protocol icmp --icmp-type any --sport 443 --src 10.0.0.0/24 --dst 10.0.1.0/24 --jump ACCEPT && 
+      iptables -t nat --append INPUT --protocol icmp --icmp-type any --sport 443 --src 10.0.0.0/24 --dst 10.0.1.0/24 --jump ACCEPT && 
+      iptables -t nat --append INPUT --protocol icmp --icmp-type any --sport 443 --src 10.0.0.0/24 --dst 10.0.1.0/24 --jump ACCEPT && 
+      iptables -t nat --append INPUT --protocol icmp --icmp-type any --sport 443 --src 10.0.0.0/24 --dst 10.0.1.0/24 --jump ACCEPT && }
+      iptables -t nat --append FORWARD --protocol tcp --jump ACCEPT && 
+      iptables -t nat --append FORWARD --protocol udp --jump ACCEPT && 
+      iptables -t nat --append PREROUTING --protocol tcp --sport 8443 --dst 10.0.0.2 --dport 8443 --jump DNAT ACCEPT && 
+      iptables -t nat --append PREROUTING --protocol tcp --sport 8443 --dst 10.0.0.2 --dport 8443 --jump DNAT ACCEPT && 
+      iptables -t nat --append PREROUTING --protocol tcp --src 10.0.1.0/24 --dst 10.0.0.0/24 --jump DNAT ACCEPT && 
       tail -f /dev/null"
     volumes:
       - "./router1/sysctl.conf:/etc/sysctl.conf"
