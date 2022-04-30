@@ -18,9 +18,11 @@ services:
       - net.ipv4.tcp_timestamps=0
     command: >-
       sh -c "sysctl -p &&
-      iptables -I INPUT -j ACCEPT
-      iptables -I OUTPUT -j ACCEPT
-      iptables -t nat -A POSTROUTING -j MASQUERADE &&
+      iptables --append INPUT --protocol tcp --jump ACCEPT && 
+      iptables --append INPUT --protocol udp --jump ACCEPT && 
+      iptables --append OUTPUT --protocol tcp --jump ACCEPT && 
+      iptables --append OUTPUT --protocol udp --jump ACCEPT && 
+      iptables -t nat -A POSTROUTING -j MASQUERADE && 
       tail -f /dev/null"
     volumes:
       - "./router1/sysctl.conf:/etc/sysctl.conf"
@@ -43,10 +45,12 @@ services:
       - net.ipv4.tcp_timestamps=0
     command: >-
       sh -c "sysctl -p &&
-      iptables -I INPUT -j ACCEPT
-      iptables -I OUTPUT -j ACCEPT
+      iptables --append INPUT --protocol tcp --jump ACCEPT && 
+      iptables --append INPUT --protocol udp --jump ACCEPT && 
+      iptables --append OUTPUT --protocol tcp --jump ACCEPT && 
+      iptables --append OUTPUT --protocol udp --jump ACCEPT && 
       ip route replace default via 10.0.0.10 && 
-      iptables -t nat -A POSTROUTING -j MASQUERADE &&
+      iptables -t nat -A POSTROUTING -j MASQUERADE && 
       tail -f /dev/null"
     volumes:
       - "./router1/sysctl.conf:/etc/sysctl.conf"
@@ -72,7 +76,6 @@ services:
       placement:
         constraints: [node.role == manager]
     restart: on-failure
-    command: ["sleep","infinity"] 
     tty: true
     privileged: true
     ports:
@@ -118,7 +121,6 @@ services:
       - ./dns/bind/db.lan02:/etc/bind/zones/db.lan02
 
     restart: on-failure
-    command: ["sleep","infinity"]
     tty: true
     cap_add:
       - NET_ADMIN
@@ -152,7 +154,6 @@ services:
     networks:
       vlan-1:
         ipv4_address: 10.0.0.20
-      vlan-2:
 
   web_server_1:
     build: 
@@ -238,6 +239,7 @@ services:
       - dhcp1
     networks:
       vlan-1:
+        ipv4_address: 10.0.0.50
 
   cliente_02:
     build: 
@@ -259,6 +261,7 @@ services:
       - router2
     networks:
       vlan-2:
+        ipv4_address: 10.0.1.50
 
 networks:
   host-bridge:
@@ -275,6 +278,7 @@ networks:
       driver: default
       config:
         - subnet: 10.0.0.0/24
+
   vlan-2:
     name: LAN Virtual 2
     driver: macvlan
