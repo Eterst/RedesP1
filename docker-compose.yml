@@ -18,6 +18,8 @@ services:
       - net.ipv4.tcp_timestamps=0
     command: >-
       sh -c "sysctl -p &&
+      iptables -I INPUT -j ACCEPT
+      iptables -I OUTPUT -j ACCEPT
       iptables -t nat -A POSTROUTING -j MASQUERADE &&
       tail -f /dev/null"
     volumes:
@@ -41,6 +43,9 @@ services:
       - net.ipv4.tcp_timestamps=0
     command: >-
       sh -c "sysctl -p &&
+      iptables -I INPUT -j ACCEPT
+      iptables -I OUTPUT -j ACCEPT
+      ip route replace default via 10.0.0.10 && 
       iptables -t nat -A POSTROUTING -j MASQUERADE &&
       tail -f /dev/null"
     volumes:
@@ -59,6 +64,9 @@ services:
       dockerfile: dockerFile
     user: root
     container_name: dhcpd1
+    command: >-
+      sh -c "ip route replace default via 10.0.0.10 &&
+      tail -f /dev/null"
     deploy:
       replicas: 1
       placement:
@@ -91,6 +99,9 @@ services:
       dockerfile: dockerFile
     user: root
     container_name: dns
+    command: >-
+      sh -c "ip route replace default via 10.0.0.10 &&
+      tail -f /dev/null"
     volumes:
       - ./dns/rndc.key:/etc/dhcp/rndc.key
       - ./dns/named.conf:/etc/bind/named.conf
@@ -123,6 +134,9 @@ services:
       context: ./reverse_proxy
       dockerfile: dockerFile
     container_name: reverse_proxy
+    command: >-
+      sh -c "ip route replace default via 10.0.0.10 &&
+      tail -f /dev/null"
     ports:
       - "80:80"
       - "443:443"
@@ -145,6 +159,9 @@ services:
       context: ./web_server1
       dockerfile: dockerFile
     container_name: web_server_1
+    command: >-
+      sh -c "ip route replace default via 10.0.0.10 &&
+      tail -f /dev/null"
     expose:
       - "80"
     volumes:
@@ -163,6 +180,9 @@ services:
       context: ./web_server2
       dockerfile: dockerFile
     container_name: web_server_2
+    command: >-
+      sh -c "ip route replace default via 10.0.1.2 &&
+      tail -f /dev/null"
     expose:
       - "80"
     volumes:
@@ -185,6 +205,9 @@ services:
     build: 
       context: ./openvpn
       dockerfile: dockerFile
+    command: >-
+      sh -c "ip route replace default via 10.0.1.2 &&
+      tail -f /dev/null"
     ports:
       - "8443:8443/tcp" #router 1 debe enrutar a este puerto
     networks:
