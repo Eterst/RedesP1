@@ -68,6 +68,9 @@ services:
       dockerfile: dockerFile
     user: root
     container_name: dhcpd1
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
     command: >-
       sh -c "ip route replace default via 10.0.0.10 &&
       tail -f /dev/null"
@@ -87,8 +90,6 @@ services:
       - ./dhcp_server/isc-dhcp-server:/etc/default/isc-dhcp-server
       - ./dhcp_server/interfaces:/etc/network/interfaces
       - ./dhcp_server/rndc.conf:/etc/dhcp/rndc.conf
-    cap_add:
-      - NET_ADMIN
     environment:
       - HTTP_USER=foo
       - HTTP_PASS=bar
@@ -102,6 +103,9 @@ services:
       dockerfile: dockerFile
     user: root
     container_name: dns
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
     command: >-
       sh -c "ip route replace default via 10.0.0.10 &&
       tail -f /dev/null"
@@ -122,8 +126,6 @@ services:
 
     restart: on-failure
     tty: true
-    cap_add:
-      - NET_ADMIN
     environment:
       - HTTP_USER=foo
       - HTTP_PASS=bar
@@ -136,6 +138,9 @@ services:
       context: ./reverse_proxy
       dockerfile: dockerFile
     container_name: reverse_proxy
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
     command: >-
       sh -c "ip route replace default via 10.0.0.10 &&
       tail -f /dev/null"
@@ -160,6 +165,9 @@ services:
       context: ./web_server1
       dockerfile: dockerFile
     container_name: web_server_1
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
     command: >-
       sh -c "ip route replace default via 10.0.0.10 &&
       tail -f /dev/null"
@@ -181,6 +189,9 @@ services:
       context: ./web_server2
       dockerfile: dockerFile
     container_name: web_server_2
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
     command: >-
       sh -c "ip route replace default via 10.0.1.2 &&
       tail -f /dev/null"
@@ -203,6 +214,7 @@ services:
     restart: always
     cap_add:
       - NET_ADMIN
+      - SYS_MODULE
     build: 
       context: ./openvpn
       dockerfile: dockerFile
