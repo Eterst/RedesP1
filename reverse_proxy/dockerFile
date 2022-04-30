@@ -5,4 +5,5 @@ RUN apt-get update -y && \
     apt-get install -y ufw &&\
     apt-get install openssl && \
     ufw allow 80 && \
-    apt-get install -y httpie
+    apt-get install -y httpie && \
+    apt-get install -y iproute2
