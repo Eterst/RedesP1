@@ -18,15 +18,49 @@ services:
       - net.ipv4.tcp_timestamps=0
     command: >-
       sh -c "sysctl -p &&
-      iptables -t nat -A POSTROUTING -j MASQUERADE &&
+      iptables --append INPUT --protocol tcp --jump ACCEPT && 
+      iptables --append INPUT --protocol udp --jump ACCEPT && 
+      iptables --append OUTPUT --protocol tcp --jump ACCEPT && 
+      iptables --append OUTPUT --protocol udp --jump ACCEPT && 
+      iptables -t nat -A POSTROUTING -j MASQUERADE && 
       tail -f /dev/null"
     volumes:
       - "./router1/sysctl.conf:/etc/sysctl.conf"
-    #  - ./router1/bash.sh:/bash.sh
     networks:
       host-bridge:
       vlan-1:
         ipv4_address: 10.0.0.10
+
+  router2:
+    build: 
+      context: ./router1
+      dockerfile: dockerFile
+    container_name: router2
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.tcp_timestamps=0
+    command: >-
+      sh -c "sysctl -p &&
+      iptables --append INPUT --protocol tcp --jump ACCEPT && 
+      iptables --append INPUT --protocol udp --jump ACCEPT && 
+      iptables --append OUTPUT --protocol tcp --jump ACCEPT && 
+      iptables --append OUTPUT --protocol udp --jump ACCEPT && 
+      ip route replace default via 10.0.0.10 && 
+      iptables -t nat -A POSTROUTING -j MASQUERADE && 
+      tail -f /dev/null"
+    volumes:
+      - "./router1/sysctl.conf:/etc/sysctl.conf"
+    depends_on:
+      - router1
+    networks:
+      vlan-1:
+        ipv4_address: 10.0.0.2
+      vlan-2:
+        ipv4_address: 10.0.1.2
 
   dhcp1:
     build: 
@@ -34,12 +68,14 @@ services:
       dockerfile: dockerFile
     user: root
     container_name: dhcpd1
+    command: >-
+      sh -c "ip route replace default via 10.0.0.10 &&
+      tail -f /dev/null"
     deploy:
       replicas: 1
       placement:
         constraints: [node.role == manager]
     restart: on-failure
-    command: ["sleep","infinity"] 
     tty: true
     privileged: true
     ports:
@@ -66,6 +102,9 @@ services:
       dockerfile: dockerFile
     user: root
     container_name: dns
+    command: >-
+      sh -c "ip route replace default via 10.0.0.10 &&
+      tail -f /dev/null"
     volumes:
       - ./dns/rndc.key:/etc/dhcp/rndc.key
       - ./dns/named.conf:/etc/bind/named.conf
@@ -82,7 +121,6 @@ services:
       - ./dns/bind/db.lan02:/etc/bind/zones/db.lan02
 
     restart: on-failure
-    command: ["sleep","infinity"]
     tty: true
     cap_add:
       - NET_ADMIN
@@ -98,6 +136,9 @@ services:
       context: ./reverse_proxy
       dockerfile: dockerFile
     container_name: reverse_proxy
+    command: >-
+      sh -c "ip route replace default via 10.0.0.10 &&
+      tail -f /dev/null"
     ports:
       - "80:80"
       - "443:443"
@@ -113,13 +154,15 @@ services:
     networks:
       vlan-1:
         ipv4_address: 10.0.0.20
-      vlan-2:
 
   web_server_1:
     build: 
       context: ./web_server1
       dockerfile: dockerFile
     container_name: web_server_1
+    command: >-
+      sh -c "ip route replace default via 10.0.0.10 &&
+      tail -f /dev/null"
     expose:
       - "80"
     volumes:
@@ -138,6 +181,9 @@ services:
       context: ./web_server2
       dockerfile: dockerFile
     container_name: web_server_2
+    command: >-
+      sh -c "ip route replace default via 10.0.1.2 &&
+      tail -f /dev/null"
     expose:
       - "80"
     volumes:
@@ -160,6 +206,9 @@ services:
     build: 
       context: ./openvpn
       dockerfile: dockerFile
+    command: >-
+      sh -c "ip route replace default via 10.0.1.2 &&
+      tail -f /dev/null"
     ports:
       - "8443:8443/tcp" #router 1 debe enrutar a este puerto
     networks:
@@ -190,6 +239,29 @@ services:
       - dhcp1
     networks:
       vlan-1:
+        ipv4_address: 10.0.0.50
+
+  cliente_02:
+    build: 
+      context: ./ubuntu
+      dockerfile: dockerFile
+    container_name: ubuntu2
+    privileged: true
+    restart: on-failure
+    command: >-
+      sh -c "ip route replace default via 10.0.1.2 &&
+      tail -f /dev/null"
+    volumes:
+      - ./ubuntu/resolv.conf:/etc/resolv.conf
+      - ./ubuntu/interfaces:/etc/network/interfaces
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    depends_on:
+      - router2
+    networks:
+      vlan-2:
+        ipv4_address: 10.0.1.50
 
 networks:
   host-bridge:
@@ -206,6 +278,7 @@ networks:
       driver: default
       config:
         - subnet: 10.0.0.0/24
+
   vlan-2:
     name: LAN Virtual 2
     driver: macvlan
