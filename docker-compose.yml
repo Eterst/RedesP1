@@ -315,7 +315,6 @@ services:
       - dhcp1
     networks:
       vlan-1:
-        ipv4_address: 10.0.0.50
 
   cliente_02:
     build: 
@@ -337,7 +336,6 @@ services:
       - router2
     networks:
       vlan-2:
-        ipv4_address: 10.0.1.50
 
 networks:
   host-bridge:
